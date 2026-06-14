@@ -64,6 +64,16 @@ make          # builds dino_metal (GUI) and dino_grab (CLI)
   macOS `libusb` does not deliver (the vendor driver used IOKit directly). Capture is
   therefore triggered from the UI / Spacebar instead.
 
+## Disclaimer
+
+Independent, non-commercial, hobbyist interoperability project. **Not affiliated with,
+authorized, or endorsed by AnMo Electronics / Dino-Lite or Sonix.** "Dino-Lite" and other
+trademarks belong to their respective owners and are used here only nominatively, to
+describe hardware compatibility. No vendor firmware, drivers, binaries, logos, or
+proprietary source are included or redistributed; the app icon is original artwork. The
+USB protocol is implemented from the GPL-2.0 Linux `gspca sn9c20x` driver. Provided "as
+is", without warranty.
+
 ## License
 
 GPL-2.0-or-later. The protocol is derived from the GPL-2.0 Linux `gspca sn9c20x`
