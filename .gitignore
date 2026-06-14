@@ -1,0 +1,17 @@
+# build artifacts
+dino_metal
+dino_grab
+*.o
+*.dSYM/
+
+# captures / scratch
+*.png
+*.ppm
+*.pgm
+*.bin
+.DS_Store
+
+# Linux kernel reference sources (GPL-2.0) - see README for the upstream URL.
+# Not redistributed here; keep locally for reference if you have them.
+sn9c20x.c
+gspca.h
