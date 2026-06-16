@@ -1,6 +1,8 @@
 # build artifacts
 dino_metal
 dino_grab
+dino_shot
+dino_yuv
 *.o
 *.dSYM/
 
@@ -15,3 +17,8 @@ dino_grab
 # Not redistributed here; keep locally for reference if you have them.
 sn9c20x.c
 gspca.h
+
+# Proprietary vendor material - reference only, never committed.
+dinocapture_recovered/
+*.exe
+*.exe.c

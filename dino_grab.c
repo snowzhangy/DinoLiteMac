@@ -103,7 +103,14 @@ static void dino_start(void){
     reg_w(0x1180, hw, 6);
     reg_w1(0x1189, 0xc0);     // scale 1280x1024 (SXGA)
     reg_w1(0x10e0, 0x2d);     // fmt RAW BGGR8
-    // MT9M111 runs its own hardware AE/AGC - leave exposure/gain to it
+    // Neutral hardware baseline (same as the GUI / proven snap path): a fixed shutter
+    // plus unity-ish color gains. Without this the MT9M111 gains float and the RAW takes
+    // a heavy color cast - so a "raw check" with floating gains is NOT representative.
+    i2c_w2(0xf0,0x0000);
+    i2c_w2(0x09,0x0180);
+    i2c_w2(0x2c,0x0040); i2c_w2(0x2d,0x0040);
+    i2c_w2(0x2e,0x0040); i2c_w2(0x2f,0x0040);
+    i2c_w2(0xf0,0x0000);
     reg_w1(0x1007, 0x20);     // stream on
     reg_w1(0x1061, 0x03);
 }
@@ -152,7 +159,7 @@ static inline int px(uint8_t*b,int x,int y){
 static void debayer(uint8_t*raw, uint8_t*rgb){
     for(int y=0;y<CH;y++) for(int x=0;x<W;x++){
         int R,G,B, c=raw[y*W+x];
-        int ye=!(y&1), xe=!(x&1);                       // BGGR: (even,even)=B (odd,odd)=R
+        int ye=!(y&1), xe=!(x&1);                       // BGGR: row even B/G, row odd G/R
         if(ye&&xe){ B=c; G=(px(raw,x-1,y)+px(raw,x+1,y)+px(raw,x,y-1)+px(raw,x,y+1))/4;
                     R=(px(raw,x-1,y-1)+px(raw,x+1,y-1)+px(raw,x-1,y+1)+px(raw,x+1,y+1))/4; }
         else if(!ye&&!xe){ R=c; G=(px(raw,x-1,y)+px(raw,x+1,y)+px(raw,x,y-1)+px(raw,x,y+1))/4;

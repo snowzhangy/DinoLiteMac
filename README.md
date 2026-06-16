@@ -12,11 +12,17 @@ kernel `gspca sn9c20x` driver.
 ## Features
 
 - Live **1280×1023 SXGA** preview, GPU-accelerated (Metal).
-- Correct color: GPU debayer (BGGR, block chroma + full-res luma), white balance,
-  **sRGB gamma**, and a contrast control.
+- Correct color: GPU debayer (**BGGR**), white balance, **sRGB gamma**, and a
+  contrast control.
+- **YUV 640×472 mode** — the bridge's hardware demosaic (no software debayer);
+  switch between SXGA and YUV live from the **Mode** control.
 - **Hardware auto-exposure** (the MT9M111 runs its own AE/AGC — stable, no pumping).
 - **Auto white balance** (white-patch; converges then locks, no flicker).
-- **PNG capture** to the Desktop — via the on-screen button or the **Spacebar**.
+- **Luma / Sat** render controls (brightness + saturation, both modes).
+- **Hotplug recovery** — unplug/replug reconnects automatically and re-lays the
+  bridge color baseline (no cast after a replug).
+- **PNG capture** to the Desktop — via the on-screen button or the **Spacebar**,
+  with a low-pass pass to reduce resolved print-screen dots.
 - LED on/off.
 - Runtime **Bayer phase** selector (in case a different unit ships a different phase).
 
@@ -28,7 +34,7 @@ kernel `gspca sn9c20x` driver.
 ## Build & run
 
 ```sh
-make          # builds dino_metal (GUI) and dino_grab (CLI)
+make          # builds dino_metal (GUI), dino_grab, and dino_shot
 ./dino_metal  # or: make run
 ```
 
@@ -39,11 +45,13 @@ make          # builds dino_metal (GUI) and dino_grab (CLI)
 | Control      | Action                                                        |
 |--------------|---------------------------------------------------------------|
 | Capture / ␣  | Save a PNG to `~/Desktop`                                      |
+| Mode         | Switch **SXGA** (1280×1023 RAW) ⇄ **YUV** (640×472 hardware)   |
 | LED On/Off   | Toggle the ring light (single GPIO LED — no brightness levels) |
 | Gray         | Show raw luminance (no debayer) — best for fine detail        |
-| Lock WB      | Re-run auto white balance, then lock                          |
+| Lock WB      | Re-run auto white balance, then lock (SXGA; YUV self-balances) |
 | Bayer        | Cycle the Bayer phase (default **BGGR**) if colors look wrong  |
 | Contrast     | sRGB-space contrast around mid-gray                           |
+| Luma / Sat   | Render brightness / saturation (both modes)                   |
 
 ## CLI grabber
 
