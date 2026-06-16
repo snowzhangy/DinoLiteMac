@@ -6,6 +6,10 @@ dino_yuv
 *.o
 *.dSYM/
 
+# release bundle / zip (produced by `make dist`; uploaded to GitHub Releases)
+DinoLiteMac.app/
+DinoLiteMac-v*-macOS-arm64.zip
+
 # captures / scratch
 *.png
 *.ppm

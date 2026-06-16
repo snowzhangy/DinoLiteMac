@@ -25,7 +25,13 @@ dino_shot: dino_shot.c
 run: dino_metal
 	./dino_metal
 
+# self-contained, ad-hoc-signed .app + release zip (bundles libusb; see pack-app.sh)
+VERSION ?= 1.1.0
+dist:
+	BREW=$(BREW) ./pack-app.sh $(VERSION)
+
 clean:
 	rm -f dino_metal dino_grab dino_shot
+	rm -rf DinoLiteMac.app DinoLiteMac-v*-macOS-arm64.zip
 
-.PHONY: all run clean
+.PHONY: all run dist clean

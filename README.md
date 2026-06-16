@@ -26,7 +26,19 @@ kernel `gspca sn9c20x` driver.
 - LED on/off.
 - Runtime **Bayer phase** selector (in case a different unit ships a different phase).
 
-## Requirements
+## Download
+
+A prebuilt **DinoLiteMac.app** (Apple Silicon) is attached to each
+[release](https://github.com/snowzhangy/DinoLiteMac/releases). It bundles `libusb`,
+so no Homebrew is needed. It is not notarized, so clear the quarantine on first launch:
+
+```sh
+xattr -dr com.apple.quarantine /path/to/DinoLiteMac.app
+```
+
+(or right-click the app → **Open**). Then plug in the microscope and launch it.
+
+## Requirements (build from source)
 
 - Apple Silicon Mac, recent macOS.
 - [`libusb`](https://libusb.info/): `brew install libusb`
@@ -36,6 +48,7 @@ kernel `gspca sn9c20x` driver.
 ```sh
 make          # builds dino_metal (GUI), dino_grab, and dino_shot
 ./dino_metal  # or: make run
+make dist     # self-contained DinoLiteMac.app + release zip (bundles libusb, ad-hoc signed)
 ```
 
 > Plug in the microscope first. If the app can't claim the device, unplug/replug it.
